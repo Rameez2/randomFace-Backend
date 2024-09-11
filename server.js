@@ -3,6 +3,14 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io'); // Import Server from socket.io
 const cors = require('cors');
+const authRoutes = require("./src/routes/authRoutes");
+const profileRoutes = require("./src/routes/profileRoutes");
+const verificationRoutes = require("./src/routes/verificationRoute");
+const adminRoutes = require("./src/routes/adminRoutes");
+const path = require('path');
+require('dotenv').config();
+// DB Connection
+require("./src/config/dbConnection")();
 
 const app = express();
 const server = http.createServer(app);
@@ -15,6 +23,22 @@ const io = new Server(server, {
 });
 
 
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, '/src/public')));
+
+// Middlewares
+app.use(express.json())
+
+// ROUTERS
+app.use('/api/auth',authRoutes);
+
+app.use('/api',profileRoutes);
+
+app.use('/api',verificationRoutes);
+
+app.use('/api/admin',adminRoutes);
+
+// SOCKETS
 let currentUsers = [];
 
 io.on('connection', (socket) => {

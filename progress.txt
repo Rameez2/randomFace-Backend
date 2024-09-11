@@ -1,0 +1,20 @@
+Register +
+Login +
+Logout +
+authMiddleware +
+Profile +
+profileImage (upload) +
+VerificationImage (upload) +
+adminMiddlware (check admin role) +
+See Pending Verification (by admin) +
+
+
+
+
+.......... SECURITY ..........
+VerificationImage Upload  (
+if user had request before and is already pending,if he try to again request old file will be used,until has status is changed by admin
+pending or verified users cant upload image again
+we make sure to check all these conditions before saving the image, so we dont save extra or unwanted images
+)
+
